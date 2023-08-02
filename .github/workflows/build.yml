@@ -17,3 +17,12 @@ jobs:
 
     - name: Build Docker Image
       run: npm run image:build
+
+    - name: Save Docker image
+      run: docker save documents-manager > documents-manager.tar
+
+    - name: Upload Docker image
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-image
+        path: documents-manager.tar
