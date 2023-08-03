@@ -21,4 +21,4 @@ RUN npm run test:ci
 # Serve
 FROM nginx:1.25.1-alpine AS serve
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/www /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
