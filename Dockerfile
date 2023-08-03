@@ -17,3 +17,8 @@ USER nonroot
 ENV CHROME_BIN=/usr/bin/google-chrome
 COPY --from=build --chown=nonroot /usr/src/app /usr/src/app
 RUN npm run test:ci
+
+# Serve
+FROM nginx:1.25.1-alpine AS serve
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
