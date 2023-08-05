@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/pr-${{ github.event.pull_request.number }}
+  IMAGE_NAME: pr-${{ github.event.pull_request.number }}
 
 jobs:
   build:
@@ -30,4 +30,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.IMAGE_NAME }}
+        tags: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}
