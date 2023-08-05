@@ -6,6 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}:pr-${{ github.event.pull_request.number }}
 
 jobs:
   build:
@@ -24,9 +25,10 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        push: true
-        tags: ${{ env.REGISTRY }}/${{ github.repository }}:pr-${{ github.event.pull_request.number }}
+    - name: Build Docker image
+      run: |
+        docker build . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} --target test
+
+    - name: Push Docker image
+      run: |
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
